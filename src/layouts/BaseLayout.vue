@@ -27,7 +27,7 @@ onMounted(() => {
             class="pt-[--header-height] "
             :class="configStore.isToggleSideBar ? 'ml-[--sidebar-width-mobile]' : 'ml-[--sidebar-width]'"
         >
-            <div class="p-4 height-content">
+            <div class="height-content">
                 <RouterView />  
             </div>  
         </div>

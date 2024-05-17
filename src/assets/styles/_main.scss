@@ -48,3 +48,35 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   opacity: 0.8;
 }
+
+
+
+.typing-status span {
+  height: 8px;
+  width: 8px;
+  float: left;
+  margin: 0 1px;
+  background-color: #9E9EA1;
+  display: block;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+
+.typing-status span:nth-child(1) {
+  animation: .4s blink infinite;
+}
+
+.typing-status span:nth-child(2) {
+  animation: .7s blink infinite;
+}
+
+.typing-status span:nth-child(3) {
+  animation: 1s blink infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 1;
+  }
+}
