@@ -19,3 +19,9 @@ export const apiSendAcceptRequestFriend = (payload) => {
 
     return axiosClient.get(apiPath)
 }
+
+export const apiGetFriends = (payload) => {
+    const apiPath = `/connector/friends?_user_id=${payload}`
+
+    return axiosClient.get(apiPath)
+}

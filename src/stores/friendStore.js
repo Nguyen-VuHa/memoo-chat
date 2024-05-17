@@ -1,4 +1,4 @@
-import { apiSearchFriend, apiSendAcceptRequestFriend, apiSendRequestFriend } from "@/apis/friend";
+import { apiGetFriends, apiSearchFriend, apiSendAcceptRequestFriend, apiSendRequestFriend } from "@/apis/friend";
 import { message } from "ant-design-vue";
 import { defineStore } from "pinia";
 
@@ -7,11 +7,13 @@ export const useFriendStore = defineStore({
     id: 'friends',
     state:() => ({
         isFetchFriend: false,
+        isFetchMyFriend: false,
         isSendRequestFriend: false,
         
         userIDHandle: null,
         search: '',
         friendList: [],
+        myFriends: [],
     }),
     actions: {
         async searchFriend(payload) {
@@ -70,6 +72,19 @@ export const useFriendStore = defineStore({
 
 
                 this.isSendRequestFriend = false
+            }
+        },
+        async getMyFriends(payload) { 
+            if (!this.isFetchMyFriend) {
+                this.isFetchMyFriend = true
+
+                const res = await apiGetFriends(payload)
+
+                if (res && res.code === 200) {
+                    this.myFriends = res.data || []
+                }
+
+                this.isFetchMyFriend = false
             }
         }
     }
