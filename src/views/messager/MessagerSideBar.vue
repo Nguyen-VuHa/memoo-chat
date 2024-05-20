@@ -6,14 +6,17 @@ import { useMessageStore } from '@/stores/messageStore';
 import Cookies from 'js-cookie';
 import { onMounted } from 'vue';
 
+
 const friendStore = useFriendStore()
 const messageStore = useMessageStore()
+
 
 onMounted(() => {
     let userID = Cookies.get(USER_ID)
 
     friendStore.getMyFriends(userID)
 })
+
 </script>
 
 <template>

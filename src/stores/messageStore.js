@@ -5,7 +5,14 @@ export const useMessageStore = defineStore({
     id: 'messages',
     state:() => ({
         userConversation: '',
-        userConversationID: null
+        userConversationID: null,
+        
+        messageSocket: null,
+        isTyping: false,
+
+        messages: [],
+        messagerRender: [],
+        messageText: '',
     }),
     actions: { 
 

@@ -7,7 +7,7 @@ const configStore = useConfigStore()
 </script>
 
 <template>
-    <div class="wrapper-header transition-all" :class="configStore.isToggleSideBar ? 'toggle' : ''">
+    <div class="wrapper-header transition-all z-[99999]" :class="configStore.isToggleSideBar ? 'toggle' : ''">
         <div class="w-full h-full p-4 flex justify-between items-center">
             <HeaderControl />
             <UserControl />

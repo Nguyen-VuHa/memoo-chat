@@ -8,7 +8,7 @@ import MessagerSideBar from './MessagerSideBar.vue';
 <template>
    <div class="flex w-full h-full">
       <MessagerSideBar />
-      <div class="w-full h-full flex flex-col">
+      <div class="w-full h-full flex flex-col relative">
          <MessagerHeader />
          <MessagerContent />
       </div>
