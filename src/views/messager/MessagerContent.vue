@@ -52,7 +52,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div class='h-[100vh] w-full bg-[#acacac]/20 space-y-1 p-5 overflow-y-auto scroll-smooth'>
+    <div class='h-[100vh] w-full bg-[#acacac]/20 space-y-1 p-5 overflow-y-auto scroll-smooth mb-[60px]'>
         <div v-for="message in messageStore.messagerRender" :key="message">
             <MyMessage 
                 v-if="message[0]?.userID == jsCookie.get('user_id') || ''"

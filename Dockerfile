@@ -24,8 +24,8 @@ FROM nginx:stable-alpine as production-stage
 # Copy built assets from 'build-stage' to the default Nginx serve folder
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
-# Expose port 80 to the outside once the container has launched
-EXPOSE 80
+# Expose port 9000 to the outside once the container has launched
+EXPOSE 9000
 
 # Define the command to run your app using CMD which defines your runtime
 CMD ["nginx", "-g", "daemon off;"]
