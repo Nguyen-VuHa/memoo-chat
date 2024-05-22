@@ -33,6 +33,10 @@ jobs:
           script: |
             cd /var/local/memoo-vue-pinia
             sudo git pull
+            sudo npm i
+            sudo npm run build
+            sudo cp -r dist/* build/dist
+            cd build
             docker build --no-cache -t memoo-client:${{ env.VERSION }} .
             docker stop container-client || true
             docker rm container-client || true
