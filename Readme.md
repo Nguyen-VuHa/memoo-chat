@@ -1,5 +1,4 @@
-### Restart nginx on WINDOWS
-```
-taskkill /f /IM nginx.exe
-start nginx
+### Link Demo Open (9 AM -> 18 PM)
+``` 
+https://memoo.ddnsking.com:9000
 ```
