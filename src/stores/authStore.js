@@ -96,7 +96,6 @@ export const useAuthStore = defineStore({
                         Cookies.set(FULL_NAME, dataResp?.full_name, { expires: 1 });
                         Cookies.set(USER_ID, dataResp?.user_id, { expires: 1 });
 
-                        
                         const hashURL = window.location.hash;
                         const [path, queryString] = hashURL.slice(1).split('?');
                         const urlParams = new URLSearchParams(queryString);
@@ -105,7 +104,7 @@ export const useAuthStore = defineStore({
                         if(redirectURL && redirectURL != '/') {
                             router.push({ path: redirectURL }); 
                         } else {
-                            window.location.reload()
+                            // window.location.reload()
                         }
                     } else {
                         this.OTPRequire = true
