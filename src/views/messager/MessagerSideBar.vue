@@ -6,13 +6,14 @@ import { useMessageStore } from '@/stores/messageStore';
 import Cookies from 'js-cookie';
 import { onMounted } from 'vue';
 
+const userID = Cookies.get(USER_ID)
 
 const friendStore = useFriendStore()
 const messageStore = useMessageStore()
 
 
 onMounted(() => {
-    let userID = Cookies.get(USER_ID)
+    
 
     friendStore.getMyFriends(userID)
 })
@@ -34,8 +35,15 @@ onMounted(() => {
                 hover:bg-[#868e991a] transition-all
                 "
                 @click="() => {
-                    messageStore.userConversation=friend.FullName
-                    messageStore.userConversationID=friend.UserID
+                    if(messageStore.userConversationID != friend.UserID) {
+                        messageStore.userConversation = friend.FullName
+                        messageStore.userConversationID = friend.UserID
+                        messageStore.fetchMessageList({
+                            senderID: userID,
+                            receiverID: friend.UserID,
+                        })
+                    }
+                 
                 }"
             >
                 <div class="w-[40px] h-[40px]">
@@ -44,7 +52,7 @@ onMounted(() => {
                 <div>
                     {{ friend.FullName }}
                     <div>
-                        <span class="text-xs text-[#87d068]">Hoạt động 30 phút trước</span>
+                        <span class="text-xs text-[#87d068]">Hoạt động ... phút trước</span>
                     </div>
                 </div>
             </div>

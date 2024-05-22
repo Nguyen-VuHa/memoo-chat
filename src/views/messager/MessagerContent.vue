@@ -44,6 +44,8 @@ watchEffect(() => {
         })
 
         messageStore.messagerRender = messageRender
+    } else {
+        messageStore.messagerRender = []
     }
 })
 
