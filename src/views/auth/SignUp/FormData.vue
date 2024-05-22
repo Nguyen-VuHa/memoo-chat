@@ -26,11 +26,11 @@ const handleSignUpAccount = async (e) => {
             FullName: authStore.formSignUp.fullname,
         }
 
-        // const dataDecode = await encryptRSA(authStore.publicKey, JSON.stringify(payload))
-        // const base64DecodeData = uint8ArrayToBase64(dataDecode);
+        const dataDecode = await encryptRSA(authStore.publicKey, JSON.stringify(payload))
+        const base64DecodeData = uint8ArrayToBase64(dataDecode);
 
-        // authStore.signUpAccount(base64DecodeData)
-        authStore.signUpAccount(payload)
+        authStore.signUpAccount(base64DecodeData)
+        // authStore.signUpAccount(payload)
     } 
 }
 

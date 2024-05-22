@@ -22,10 +22,11 @@ const handleSignInAccount = async (e) => {
             Password: authStore.formSignIn.password,
         }
 
-        // const dataDecode = await encryptRSA(authStore.publicKey, JSON.stringify(payload))
-        // const base64DecodeData = uint8ArrayToBase64(dataDecode);
-        // authStore.signInAccount(base64DecodeData)
-        authStore.signInAccount(payload)
+        const dataDecode = await encryptRSA(authStore.publicKey, JSON.stringify(payload))
+        const base64DecodeData = uint8ArrayToBase64(dataDecode);
+        authStore.signInAccount(base64DecodeData)
+        
+        // authStore.signInAccount(payload)
     } 
 }
 
