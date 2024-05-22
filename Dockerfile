@@ -2,7 +2,10 @@
 FROM node:16-alpine AS build-stage
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+
+# Retry npm install up to 3 times in case of network failures
+RUN npm install || npm install || npm install
+
 COPY . .
 RUN npm run build
 
@@ -12,7 +15,9 @@ WORKDIR /app
 COPY --from=build-stage /app/dist ./dist
 COPY server.js .
 COPY package*.json ./
-RUN npm install
+
+# Retry npm install up to 3 times in case of network failures
+RUN npm install --only=production || npm install --only=production || npm install --only=production
 
 EXPOSE 4500
 CMD ["node", "server.js"]
