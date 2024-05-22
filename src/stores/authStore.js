@@ -58,7 +58,9 @@ export const useAuthStore = defineStore({
             if(!this.isSignUp) {
                 this.isSignUp = true
 
-                const res = await apiSignUp(payload) 
+                const res = await apiSignUp({
+                    data: payload
+                }) 
 
                 if (res && res.code === 200) { 
                     message.success(res.message || "Đăng ký tài khoản thành công.")
@@ -80,7 +82,9 @@ export const useAuthStore = defineStore({
             if (!this.isSignIn) {
                 this.isSignIn = true
 
-                const res = await apiSignIn(payload) 
+                const res = await apiSignIn({
+                    data: payload
+                }) 
 
 
                 if (res && res.code === 200) {
