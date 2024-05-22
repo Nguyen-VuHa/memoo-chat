@@ -31,9 +31,9 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: 25
           script: |
-            cd /var/local/memoo-service-message
+            cd /var/local/memoo-vue-pinia
             sudo git pull
-            docker build --no-cache -t sv-message:${{ env.VERSION }} .
-            docker stop container-message || true
-            docker rm container-message || true
-            docker run -d --name container-message --restart always -p 4400:4400 -v /etc/localtime:/etc/localtime:ro  -v /etc/timezone:/etc/timezone:ro sv-message:${{ env.VERSION }}
+            docker build --no-cache -t memoo-client:${{ env.VERSION }} .
+            docker stop container-client || true
+            docker rm container-client || true
+            docker run -d --name container-client --restart always -p 4500:4500 -v /etc/localtime:/etc/localtime:ro  -v /etc/timezone:/etc/timezone:ro memoo-client:${{ env.VERSION }}
