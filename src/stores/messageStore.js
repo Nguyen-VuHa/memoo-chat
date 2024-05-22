@@ -33,19 +33,18 @@ export const useMessageStore = defineStore({
                         this.messages = []
                         res.data.map(dt => { 
                             if (userID === dt.SenderID) {
-                                this.messages = this.messages.concat({
+                                this.messages = [{
                                     message: dt.Content,
                                     userID: userID,
                                     time:  dayjs(dt.CreatedAt),
-                                })
+                                }].concat(this.messages)
                             } else {
-                                this.messages = this.messages.concat({
+                                this.messages = [{
                                     message: dt.Content,
                                     userID: dt.SenderID,
                                     time:  dayjs(dt.CreatedAt),
-                                })
+                                }].concat(this.messages)
                             }
-                      
                         })
                     } else {
                         this.messages = []
