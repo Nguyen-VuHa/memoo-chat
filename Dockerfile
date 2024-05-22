@@ -12,7 +12,7 @@ WORKDIR /app
 COPY --from=build-stage /app/dist ./dist
 COPY server.js .
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 EXPOSE 4500
 CMD ["node", "server.js"]
