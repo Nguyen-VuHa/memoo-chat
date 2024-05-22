@@ -58,9 +58,7 @@ export const useAuthStore = defineStore({
             if(!this.isSignUp) {
                 this.isSignUp = true
 
-                const res = await apiSignUp({
-                    data: payload,
-                }) 
+                const res = await apiSignUp(payload) 
 
                 if (res && res.code === 200) { 
                     message.success(res.message || "Đăng ký tài khoản thành công.")
@@ -82,9 +80,7 @@ export const useAuthStore = defineStore({
             if (!this.isSignIn) {
                 this.isSignIn = true
 
-                const res = await apiSignIn({
-                    data: payload,
-                }) 
+                const res = await apiSignIn(payload) 
 
 
                 if (res && res.code === 200) {
@@ -104,7 +100,7 @@ export const useAuthStore = defineStore({
                         if(redirectURL && redirectURL != '/') {
                             router.push({ path: redirectURL }); 
                         } else {
-                            // window.location.reload()
+                            window.location.reload()
                         }
                     } else {
                         this.OTPRequire = true

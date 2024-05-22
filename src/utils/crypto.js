@@ -16,10 +16,7 @@ export async function encryptRSA(publicKeyPem, data) {
 }
 
 async function importPublicKey(pem) {
-    const pemContents = pem
-    //  pem.replace(/(-----(BEGIN|END) (RSA )?PUBLIC KEY-----|[\n\r])/g, '');
-
-    const binaryDer = window.atob(pemContents);
+    const binaryDer = window.atob(pem);
     if (window.crypto && window.crypto.subtle) { 
         return window.crypto.subtle.importKey(
             "spki",
