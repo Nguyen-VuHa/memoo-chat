@@ -17,18 +17,22 @@ export async function encryptRSA(publicKeyPem, data) {
 
 async function importPublicKey(pem) {
     const pemContents = pem.replace(/(-----(BEGIN|END) (RSA )?PUBLIC KEY-----|[\n\r])/g, '');
-    const binaryDer = window.atob(pemContents);
 
-    return window.crypto.subtle.importKey(
-        "spki",
-        str2ab(binaryDer),
-        {
-            name: "RSA-OAEP",
-            hash: {name: "SHA-256"},
-        },
-        true,
-        ["encrypt"]
-    );
+    const binaryDer = window.atob(pemContents);
+    if (window.crypto && window.crypto.subtle) { 
+        return window.crypto.subtle.importKey(
+            "spki",
+            str2ab(binaryDer),
+            {
+                name: "RSA-OAEP",
+                hash: {name: "SHA-256"},
+            },
+            true,
+            ["encrypt"]
+        );
+    } else {
+        console.error("Web Cryptography API not supported.");
+    }
 }
 
 function str2ab(str) {
