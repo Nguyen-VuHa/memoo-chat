@@ -36,4 +36,4 @@ jobs:
             docker build --no-cache -t memoo-client:${{ env.VERSION }} .
             docker stop container-client || true
             docker rm container-client || true
-            docker run -d --name container-client --restart always -p 4500:4500 -v /etc/localtime:/etc/localtime:ro  -v /etc/timezone:/etc/timezone:ro memoo-client:${{ env.VERSION }}
+            docker run -d --name container-client --restart always -p 4500:4500 memoo-client:${{ env.VERSION }}
