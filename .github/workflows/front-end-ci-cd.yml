@@ -1,0 +1,39 @@
+name: CI/CD Pipeline Front End
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy:
+    name: Build and Deploy on Server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Extract version from Git tag
+        id: vars
+        run: echo "VERSION=$(git describe --tags --always --dirty)" >> $GITHUB_ENV
+
+        
+      - name: Build and Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.4
+        env:
+          VERSION: ${{ env.VERSION }}
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 25
+          script: |
+            cd /var/local/memoo-service-message
+            sudo git pull
+            docker build --no-cache -t sv-message:${{ env.VERSION }} .
+            docker stop container-message || true
+            docker rm container-message || true
+            docker run -d --name container-message --restart always -p 4400:4400 -v /etc/localtime:/etc/localtime:ro  -v /etc/timezone:/etc/timezone:ro sv-message:${{ env.VERSION }}
