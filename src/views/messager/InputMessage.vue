@@ -1,6 +1,7 @@
 <script setup>
 import { USER_ID } from '@/constants/cookie';
 import { useMessageStore } from '@/stores/messageStore'
+import { MessageOutlined } from '@ant-design/icons-vue';
 import dayjs from 'dayjs';
 import Cookies from 'js-cookie'
 import { reactive, watchEffect } from 'vue';
@@ -126,21 +127,7 @@ const onSendMessage = (e) => {
                 className="btn outline-none flex justify-center items-center h-9 w-9 shrink-0 rounded-full p-0 text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25"
                 type='submit'
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5.5 w-5.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        class="text-[#87d068]"
-                        d="m9.813 5.146 9.027 3.99c4.05 1.79 4.05 4.718 0 6.508l-9.027 3.99c-6.074 2.686-8.553.485-5.515-4.876l.917-1.613c.232-.41.232-1.09 0-1.5l-.917-1.623C1.26 4.66 3.749 2.46 9.813 5.146ZM6.094 12.389h7.341"
-                    />
-                </svg>
+                <MessageOutlined class="text-[#87d068] text-[25px]" />
             </button>
         </form>
 </template>
