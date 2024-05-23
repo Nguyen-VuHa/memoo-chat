@@ -9,9 +9,9 @@ const props = defineProps({
 <template>
     <div class="flex items-start justify-end space-x-2 sm:space-x-5">
             <div class="flex flex-col items-end space-y-1">
-                <div class="max-w-lg space-y-1">
+                <div class="max-w-lg flex flex-col justify-end items-end space-y-1">
                     <div 
-                        class="font-genos rounded-2xl rounded-tr-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white"
+                        class="font-genos w-fit text-end rounded-2xl rounded-tr-none bg-info/10 p-3 text-slate-700 shadow-sm dark:bg-accent dark:text-white max-md:p-2 max-md:text-sm"
                         v-for="message in props.data || []" :key="message"
                     >
                         {{ message.message }}
@@ -21,7 +21,7 @@ const props = defineProps({
                     </p>
                 </div>
             </div>
-            <div class="avatar w-10 h-10">
+            <div class="avatar w-10 h-10 max-md:w-6">
                 <img class="rounded-full" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRCFgHuWIBCleFnK0U9Hytp0Q76Ygu1alwrQ&usqp=CAU" alt="avatar" />
             </div>
         </div>

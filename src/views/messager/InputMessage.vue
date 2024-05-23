@@ -66,6 +66,7 @@ const onSendMessage = (e) => {
         let userID = Cookies.get(USER_ID)
     
         if(messageStore.userConversationID && messageStore.messageSocket) {
+            messageStore.isScrollBottom = true
             messageStore.messageSocket.send(JSON.stringify({
                 Type: "send-message",
                 UserID: userID,
@@ -88,7 +89,10 @@ const onSendMessage = (e) => {
 
 <template>
         <form 
-            class="ml-0 border-t-2 flex items-center absolute px-2 shadow-lg w-full bottom-0 left-0 h-[60px] bg-[white]" 
+            class="
+                ml-0 border-t-2 flex items-center absolute px-2 shadow-lg w-full bottom-0 left-0 h-[60px] bg-[white]
+                max-md:fixed max-md:z-[9999]
+            "
             @submit="(e) => {
                 onSendMessage(e)
             }"

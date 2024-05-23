@@ -1,7 +1,7 @@
 <script setup>
 import Menu from './Menu.vue';
 import { useConfigStore } from '@/stores/configStore'
-import Empty200 from '@/assets/images/200x200.png'
+import Logo from '@/assets/images/logo.svg'
 
 const configStore = useConfigStore()
 
@@ -17,7 +17,7 @@ const configStore = useConfigStore()
             <div class="h-[--header-height] flex justify-center items-center">
                 <img
                     class="mx-auto mb-3 h-10 w-10"
-                    :src="Empty200"
+                    :src="Logo"
                     alt="logo"
                 />
             </div>

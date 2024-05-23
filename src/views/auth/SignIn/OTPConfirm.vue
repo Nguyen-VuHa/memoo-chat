@@ -2,12 +2,9 @@
 import AppButton from '@/components/Common/AppButton.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { ref, nextTick } from 'vue';
-import { useConfigStore } from '@/stores/configStore';
 import Logo from '@/assets/images/logo.svg'
-import { apiOTPConfirm } from '@/apis/auth';
 import { message } from 'ant-design-vue';
 
-const configStore = useConfigStore()
 const authStore = useAuthStore()
 
 const otp = ref(Array(6).fill(''));
@@ -50,7 +47,7 @@ const handlePaste = (event, index) => {
 };
 
 
-const handleConfirmOTP = async () => {
+const handleConfirmOTP = () => {
   let otpString = otp.value.join("")
 
   if(otpString && otpString.length === 6) {
@@ -117,6 +114,7 @@ const handleConfirmOTP = async () => {
                   class="w-full !bg-blue" 
                   type="primary" 
                   @click="(e) => {
+                    e.preventDefault()
                     handleConfirmOTP()
                   }"
                   :loading="authStore.isConfirmOTP"

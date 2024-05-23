@@ -6,6 +6,7 @@
 :root {
   --sidebar-width: 250px;
   --sidebar-width-mobile: 80px;
+  --search-bar-mobile: calc(100% - var(--sidebar-width-mobile));
   --header-height: 64px;
   --border-color: #e9eef5;
   --primary-color: #4096ff;

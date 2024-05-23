@@ -20,6 +20,7 @@ export const useMessageStore = defineStore({
         messages: [],
         messagerRender: [],
         messageText: '',
+        isScrollBottom: false,
     }),
     actions: { 
         async fetchMessageList(payload) {
