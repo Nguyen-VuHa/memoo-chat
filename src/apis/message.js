@@ -1,7 +1,7 @@
 import axiosClient from "./axios.config"
 
 export const apiGetMessages = (payload) => {
-    const apiPath = `/message/list?_sender=${payload.senderID}&_receiver=${payload.receiverID}`
+    const apiPath = `/message/list?_sender=${payload.senderID}&_receiver=${payload.receiverID}&_last_message_id=${payload.lastMessageID}`
 
     return axiosClient.get(apiPath)
 }

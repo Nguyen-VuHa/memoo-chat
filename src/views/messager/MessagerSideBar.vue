@@ -60,7 +60,13 @@ const joinRoomMessage = async (senderID) => {
                         messageStore.fetchMessageList({
                             senderID: userID,
                             receiverID: friend.UserID,
+                            lastMessageID: '',
                         })
+
+                        messageStore.messageNextStep = []
+                        messageStore.isLastMessage = false
+                        messageStore.lastMessageNextID = ''
+                        messageStore.lastMessageID = ''
                         messageStore.isScrollBottom = true
 
                         joinRoomMessage(friend.UserID)
