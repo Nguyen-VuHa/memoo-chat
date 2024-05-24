@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useConfigStore } from '@/stores/configStore'
 import { useMessageStore } from '@/stores/messageStore';
 import Cookie from 'js-cookie';
-import { onMounted } from 'vue';
+import { onBeforeUnmount, onMounted } from 'vue';
 
 const configStore = useConfigStore()
 const authStore = useAuthStore()
@@ -18,25 +18,49 @@ onMounted(() => {
         authStore.fetchClientKey()
 })
 
-
-onMounted(() => {
+const connectSocket = () => {
     const userID = Cookie.get(USER_ID)
     var socket = new WebSocket(import.meta.env.VITE_URL_SOCKET + `/ws/connection?user_id=${userID}`);
     messageStore.messageSocket = socket
     
     socket.onopen = function() {
+        configStore.isClosedConnect = false
     };
 
     socket.onerror = (error) => {
         console.error('WebSocket error:', error);
     };
 
-    window.addEventListener('beforeunload', (e) => {
-        if (socket && socket.readyState === WebSocket.OPEN) {
-            socket.send(JSON.stringify({ type: "close", userID: userID }));
-            socket.close();
+    
+    socket.onclose = (event) => {
+        if (event.code === 1006) { 
+            configStore.isClosedConnect = true
+            console.log('Disconnected from the server (code 1006), attempting to reconnect in 5 seconds...');
+        }
+    };
+}
+
+onMounted(() => {
+    connectSocket();
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            if (configStore.isClosedConnect) {
+                connectSocket()
+            }
         }
     })
+
+    window.addEventListener('mousemove', function() {
+        if (configStore.isClosedConnect) {
+            configStore.isClosedConnect = false
+            connectSocket()
+        }
+    })
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange');
+  window.removeEventListener('mousemove')
 })
 </script>
 

@@ -7,6 +7,7 @@ export const useConfigStore = defineStore({
         isToggleSideBar: window.innerWidth <= 680 ? true :  false,
         isToggleSearhBar: false,
         isDarkMode: false,
+        isClosedConnect: false,
         windowSize: window.innerWidth,
 
         menus: [],
