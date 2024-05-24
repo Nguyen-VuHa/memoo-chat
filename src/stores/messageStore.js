@@ -1,4 +1,4 @@
-import { apiGetMessages } from "@/apis/message";
+import { apiGetMessages, apiJoinRoom } from "@/apis/message";
 import { USER_ID } from "@/constants/cookie";
 import { message } from "ant-design-vue";
 import dayjs from "dayjs";
@@ -10,15 +10,16 @@ export const useMessageStore = defineStore({
     id: 'messages',
     state:() => ({
         isFetchMessage: false,
+        isJoinRoom: false,
 
         userConversation: '',
         userConversationID: null,
         
+        roomID: '',
         messageSocket: null,
         isTyping: false,
 
         messages: [],
-        messagerRender: [],
         messageText: '',
         isScrollBottom: false,
     }),
@@ -55,6 +56,21 @@ export const useMessageStore = defineStore({
                 }
                 
                 this.isFetchMessage = false
+            }
+        },
+        async joinRoom(payload) {
+            if(!this.isJoinRoom) {
+                this.isJoinRoom = true
+
+                const res = await apiJoinRoom(payload) 
+
+                if(res && res.code == 200) {
+                    this.roomID = res.data
+                } else {
+                    message.error(res.message || "NETWORK ERROR")
+                }
+
+                this.isJoinRoom = false
             }
         }
     }

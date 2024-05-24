@@ -5,3 +5,9 @@ export const apiGetMessages = (payload) => {
 
     return axiosClient.get(apiPath)
 }
+
+export const apiJoinRoom = (payload) => {
+    const apiPath = `/socket/join?user_id=${payload.userID}&sender_id=${payload.senderID}`
+
+    return axiosClient.get(apiPath)
+}

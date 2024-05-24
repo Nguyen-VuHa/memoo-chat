@@ -13,23 +13,27 @@ watchEffect(() => {
         messageStore.messageSocket.onmessage = function(event) {
             let receiveMesssage = JSON.parse(event.data)
 
-            if (receiveMesssage.type == "typing") {
-                if (receiveMesssage.sender == messageStore.userConversationID) {
-                    messageStore.isTyping = receiveMesssage.data == "0" ? false : true
-                }
-            }
-
-            if (receiveMesssage.type == "send-message") {
-                if (receiveMesssage.sender == messageStore.userConversationID) {
-                    let dataMessage = { 
-                        message: receiveMesssage.data, 
-                        userID: receiveMesssage.sender, 
-                        time: receiveMesssage.time
+            if(receiveMesssage.roomID == messageStore.roomID) {
+                if (receiveMesssage.type == "typing") {
+                    if (receiveMesssage.userID == messageStore.userConversationID) {
+                        messageStore.isTyping = receiveMesssage.content == "0" ? false : true
                     }
+                }
 
-                    messageStore.messages = messageStore.messages.concat(dataMessage)
+                if (receiveMesssage.type == "sent-message") {
+                    if (receiveMesssage.userID == messageStore.userConversationID) {
+                        let dataMessage = { 
+                            message: receiveMesssage.content, 
+                            userID: receiveMesssage.userID, 
+                            time: receiveMesssage.time
+                        }
+
+                        messageStore.messages = messageStore.messages.concat(dataMessage)
+                    }
                 }
             }
+          
+        
         };
     }
 })
@@ -37,8 +41,9 @@ watchEffect(() => {
 const onTyping = () => {
     let userID = Cookies.get(USER_ID)
 
-    if(messageStore.userConversationID && messageStore.messageSocket) {
+    if(messageStore.userConversationID && messageStore.messageSocket && messageStore.roomID) {
         messageStore.messageSocket.send(JSON.stringify({
+            RoomID: messageStore.roomID,
             Type: "typing",
             UserID: userID,
             SenderID: messageStore.userConversationID,
@@ -50,8 +55,9 @@ const onTyping = () => {
 const onBlur = () => {
     let userID = Cookies.get(USER_ID)
 
-    if(messageStore.userConversationID && messageStore.messageSocket) {
+    if(messageStore.userConversationID && messageStore.messageSocket && messageStore.roomID) {
         messageStore.messageSocket.send(JSON.stringify({
+            RoomID: messageStore.roomID,
             Type: "typing",
             UserID: userID,
             SenderID: messageStore.userConversationID,
@@ -66,10 +72,11 @@ const onSendMessage = (e) => {
     if(messageStore.messageText) {
         let userID = Cookies.get(USER_ID)
     
-        if(messageStore.userConversationID && messageStore.messageSocket) {
+        if(messageStore.userConversationID && messageStore.messageSocket && messageStore.roomID) {
             messageStore.isScrollBottom = true
             messageStore.messageSocket.send(JSON.stringify({
-                Type: "send-message",
+                RoomID: messageStore.roomID,
+                Type: "sent-message",
                 UserID: userID,
                 SenderID: messageStore.userConversationID,
                 Content:  messageStore.messageText,

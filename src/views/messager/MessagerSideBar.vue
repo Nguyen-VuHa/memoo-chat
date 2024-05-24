@@ -4,6 +4,7 @@ import { USER_ID } from '@/constants/cookie';
 import { useConfigStore } from '@/stores/configStore';
 import { useFriendStore } from '@/stores/friendStore';
 import { useMessageStore } from '@/stores/messageStore';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import { onMounted } from 'vue';
 
@@ -18,6 +19,12 @@ onMounted(() => {
     friendStore.getMyFriends(userID)
 })
 
+const joinRoomMessage = async (senderID) => { 
+    messageStore.joinRoom({
+        userID,
+        senderID,
+    })  
+}
 </script>
 
 <template>
@@ -32,7 +39,7 @@ onMounted(() => {
     "
     :class="configStore.windowSize <= 680 && configStore.isToggleSearhBar ? 'hiden-search-bar' : ''"
     
-    >
+    >   
         <div>
             <InputSearchFriend 
             />
@@ -55,6 +62,8 @@ onMounted(() => {
                             receiverID: friend.UserID,
                         })
                         messageStore.isScrollBottom = true
+
+                        joinRoomMessage(friend.UserID)
                     }
                  
                 }"

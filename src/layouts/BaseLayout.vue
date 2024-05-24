@@ -13,13 +13,15 @@ const configStore = useConfigStore()
 const authStore = useAuthStore()
 const messageStore = useMessageStore()
 
+const userID = Cookie.get(USER_ID)
+
 onMounted(() => {
     if (!authStore.public_key)
         authStore.fetchClientKey()
 })
 
 const connectSocket = () => {
-    const userID = Cookie.get(USER_ID)
+
     var socket = new WebSocket(import.meta.env.VITE_URL_SOCKET + `/ws/connection?user_id=${userID}`);
     messageStore.messageSocket = socket
     
@@ -46,6 +48,18 @@ onMounted(() => {
         if (document.visibilityState === 'visible') {
             if (configStore.isClosedConnect) {
                 connectSocket()
+
+                if(messageStore.userConversationID) {
+                    messageStore.joinRoom({
+                        userID,
+                        senderID: messageStore.userConversationID
+                    })
+
+                    messageStore.fetchMessageList({
+                        senderID: userID,
+                        receiverID: messageStore.userConversationID,
+                    })
+                }
             }
         }
     })
@@ -54,6 +68,18 @@ onMounted(() => {
         if (configStore.isClosedConnect) {
             configStore.isClosedConnect = false
             connectSocket()
+
+            if(messageStore.userConversationID) {
+                messageStore.joinRoom({
+                    userID,
+                    senderID: messageStore.userConversationID
+                })
+
+                messageStore.fetchMessageList({
+                    senderID: userID,
+                    receiverID: messageStore.userConversationID,
+                })
+            }
         }
     })
 })
