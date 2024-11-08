@@ -1,6 +1,6 @@
 ### Link Demo Open (9 AM -> 18 PM)
 <a href="https://memoo.hanguyen.online" _blank>
-https://memoo.ddnsking.com:9000
+https://memoo.hanguyen.online
 </a>
 
 ## Workflow: Sign-up Account
